@@ -1,0 +1,95 @@
+name: Crowdin  download Action
+
+on:
+  schedule:
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+
+jobs:
+  crowdin-download-develop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: integration/6.5.x-translation
+          token: ${{ secrets.CROWDIN_GITHUB_TOKEN }}
+      - name: reset translation branch to develop's
+        run: |
+          git fetch origin develop
+          git reset origin/develop
+          git push origin -f
+          git add .
+          git stash
+      - name: Crowdin push
+        uses: crowdin/github-action@v1
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: true
+          crowdin_branch_name: develop-gamification
+          localization_branch_name: integration/6.5.x-translation
+          create_pull_request: false
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CROWDIN_GITHUB_TOKEN }}
+  crowdin-download-develop-exo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: integration/6.5.x-exo-translation
+          token: ${{ secrets.CROWDIN_GITHUB_TOKEN }}
+      - name: reset translation branch to develop's
+        run: |
+          git fetch origin develop
+          git fetch origin develop-exo
+          git reset origin/develop-exo
+          git push origin -f
+          git add .
+          git stash
+      - name: Crowdin push
+        uses: crowdin/github-action@v1
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: true
+          crowdin_branch_name: develop-exo-gamification
+          localization_branch_name: integration/6.5.x-exo-translation
+          create_pull_request: false
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CROWDIN_GITHUB_TOKEN }}
+
+
+  crowdin-download-develop-meed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: integration/6.5.x-meed-translation
+          token: ${{ secrets.CROWDIN_GITHUB_TOKEN }}
+      - name: reset translation branch to develop's
+        run: |
+          git fetch origin develop
+          git fetch origin develop-meed
+          git reset origin/develop-meed
+          git push origin -f
+
+      - name: Crowdin push
+        uses: crowdin/github-action@v1
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: true
+          crowdin_branch_name: develop-meed-gamification
+          localization_branch_name: integration/6.5.x-meed-translation
+          create_pull_request: false
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CROWDIN_GITHUB_TOKEN }}
