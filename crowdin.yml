@@ -51,6 +51,23 @@ files: [
 
   },
   {
+    "source": "/portlets/src/main/resources/locale/portlet/Analytics_en.properties",
+
+    "translation": "%original_path%/%file_name%!_%locale_with_underscore%.%file_extension%",
+    "translation_replace": {
+      "_en!": "",
+      "de_DE": "de",
+      "en_US": "en",
+      "es_ES": "es_ES",
+      "fr_FR": "fr",
+      "it_IT": "it",
+      "pt_BR": "pt_BR",
+    },
+    "dest": "exoplatform/gamification/portlet/Analytics.properties",
+    "update_option": "update_as_unapproved",
+
+  },
+  {
     "source": "/portlets/src/main/resources/locale/navigation/portal/global_en.properties",
 
     "translation": "%original_path%/%file_name%!_%locale_with_underscore%.%file_extension%",
