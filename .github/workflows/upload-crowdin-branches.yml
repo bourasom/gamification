@@ -6,7 +6,7 @@ on:
     branches:
       - develop-exo
       - develop-meed
-      - stable/${{vars.CROWDIN_MAINTENANCE_EXO_VERSION}}
+      - stable/2.5.x-exo
 
 jobs:
   check-translation-change:
