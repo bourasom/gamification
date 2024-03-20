@@ -6,6 +6,7 @@ on:
     branches:
       - develop-exo
       - develop-meed
+      - stable/${{vars.CROWDIN_MAINTENANCE_EXO_VERSION}}
 
 jobs:
   check-translation-change:
@@ -52,13 +53,14 @@ jobs:
         fi
   crowdin-upload:
     needs: [check-translation-change,check-project-build]
-    if: needs.check-translation-change.outputs.translation_change == 'true' &&  needs.check-project-build.outputs.crowdin_project_available == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: "extract branch name"
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        run: |
+          branch_ref=$(echo ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} | sed 's/stable\///g');
+          echo "branch=$branch_ref" >> $GITHUB_OUTPUT;
         id: extract_branch
       - name: Crowdin push
         uses: crowdin/github-action@v1
