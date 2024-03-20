@@ -52,7 +52,7 @@ jobs:
           echo "project_available=true" >> $GITHUB_OUTPUT
         fi
   crowdin-upload:
-    needs: [check-translation-change,check-project-build]
+    needs: [check-translation-change]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
