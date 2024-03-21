@@ -6,7 +6,7 @@ on:
     branches:
       - develop-exo
       - develop-meed
-      - stable/2.5.x-exo
+      - stable/*
 
 jobs:
   check-translation-change:
